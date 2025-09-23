@@ -1,1 +1,1 @@
-# workshop-c-language
+# Youcode-c-challenges
