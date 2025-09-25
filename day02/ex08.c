@@ -3,7 +3,7 @@
 int main()
 {
     int n, i, b;
-    printf("Veuillez entrer un nombre entier positif : ");
+    printf("entrer nbr : ");
     scanf("%d", &n);
 
     for (i = 1; i * i <= n; i++)
