@@ -2,17 +2,21 @@
 #include <stdlib.h>
 #include <string.h>
 #include "header.h"
+#define MAX 100
 
+typedef struct
+{
+    int id;
+ char model[100];
+ char statut[100];
+ int capacite;
+  char date[100];
+}avions ;
 
-int total = 0;
-int id[MAX];
-char model[MAX][100];
-char statut[MAX][100];
-int capacite[MAX];
-char date[MAX][100];
-
-
-
+avions avion[MAX];
+ int total = 0;
+ int idx = 1;
+ 
 void Affichmenu() {
     int ch;
     do {
@@ -69,27 +73,29 @@ void Ajoute() {
     scanf("%d", &aj);
 
     for (int i = total; i < total + aj; i++) {
-        id[i] = i + 1; 
+       avion[i].id = idx++;
         printf("entre Model : ");
-        scanf(" %[^\n]", model[i]);
+        scanf(" %[^\n]", avion[i].model);
         printf("entre statut (string : 'Disponible', 'En maintenance', 'En vol') : ");
-        scanf(" %[^\n]", statut[i]);
+        scanf(" %[^\n]", avion[i].statut);
         printf("entre Capacite : ");
-        scanf("%d", &capacite[i]);
+        scanf("%d", &avion[i].capacite);
         printf("entre Date (jj/mm/aaaa) : ");
-        scanf(" %[^\n]", date[i]);
-         printf("your id = %d\n", id[i]);
+        scanf(" %[^\n]", avion[i].date);
+         printf("your id = %d\n", avion[i].id);
     }
     total += aj;
+    printf("\n========DONE=========\n");
 }
 
 void Modifieid() {
     int id2;
     printf("Entrer ID de l avion a modifier : ");
     scanf("%d", &id2);
-
+    int foound = 0;
     for (int i = 0; i < total; i++) {
-        if (id2 == id[i]) {
+        if (id2 == avion[i].id) {
+            foound = 1;
             int m;
             printf("Modifier (1. modele, 2. capacite, 3. statut) : \n");
             printf("Modifier all (4. modele,capacite,statut) : \n");
@@ -98,23 +104,23 @@ void Modifieid() {
             switch (m) {
                 case 1:
                     printf("New modele : ");
-                    scanf(" %[^\n]", model[i]);
+                    scanf(" %[^\n]", avion[i].model);
                     break;
                 case 2:
                     printf("Nez capacite : ");
-                    scanf("%d", &capacite[i]);
+                    scanf("%d", &avion[i].capacite);
                     break;
                 case 3:
                     printf("New statut : ");
-                    scanf(" %[^\n]", statut[i]);
+                    scanf(" %[^\n]", avion[i].statut);
                     break;
                 case 4:
                     printf("New modele : ");
-                    scanf(" %[^\n]", model[i]);
+                    scanf(" %[^\n]", avion[i].model);
                     printf("New statut : ");
-                    scanf(" %[^\n]", statut[i]);
+                    scanf(" %[^\n]", avion[i].statut);
                     printf("Nez capacite : ");
-                    scanf("%d", &capacite[i]);
+                    scanf("%d", &avion[i].capacite);
                     break;
                 default:
                     printf("Choix invalide.\n");
@@ -124,7 +130,9 @@ void Modifieid() {
             return;
         }
     }
-    printf("non ID.\n");
+    if (!foound) {
+    printf("non id\n");
+}
 }
 
 void Afficher() {
@@ -133,11 +141,11 @@ void Afficher() {
     } else {
         printf("\n===== Liste des avions =====\n");
         for (int i = 0; i < total; i++) {
-            printf("\nID      : %d\n", id[i]);
-            printf("Modele  : %s\n", model[i]);
-            printf("Statut  : %s\n", statut[i]);
-            printf("Capacite: %d\n", capacite[i]);
-            printf("Date    : %s\n", date[i]);
+            printf("\nID      : %d\n", avion[i].id);
+            printf("Modele  : %s\n", avion[i].model);
+            printf("Statut  : %s\n", avion[i].statut);
+            printf("Capacite: %d\n", avion[i].capacite);
+            printf("Date    : %s\n", avion[i].date);
               printf("\n===== DONE =====\n");
         }
     }
@@ -149,14 +157,10 @@ void Supprimerid() {
     scanf("%d", &id2);
 
     for (int i = 0; i < total; i++) {
-        if (id2 == id[i]) {
+        if (id2 == avion[i].id) {
             found = 1;
             for (int j = i; j < total - 1; j++) {
-                id[j] = id[j + 1];
-                strcpy(model[j], model[j + 1]);
-                strcpy(statut[j], statut[j + 1]);
-                capacite[j] = capacite[j + 1];
-                strcpy(date[j], date[j + 1]);
+               avion[j] = avion[j+1];
             }
             total--;
             printf("supprime Id %d\n", id2);
@@ -175,14 +179,10 @@ void Supprimermodel() {
     scanf(" %[^\n]", model2);
 
     for (int i = 0; i < total; i++) {
-        if (strcmp(model2, model[i]) == 0) {
+        if (strcmp(model2, avion[i].model) == 0) {
             found = 1;
             for (int j = i; j < total - 1; j++) {
-                id[j] = id[j + 1];
-                strcpy(model[j], model[j + 1]);
-                strcpy(statut[j], statut[j + 1]);
-                capacite[j] = capacite[j + 1];
-                strcpy(date[j], date[j + 1]);
+                avion[j] = avion[j+1];
             }
             total--;
             printf("supprime modele '%s'.\n", model2);
@@ -215,11 +215,12 @@ void suppimer() {
 }
 void Modifiemodel() {
     char model2[100];
-    printf("Entrer ID de l avion a modifier : ");
+    printf("Entrer model modifier : ");
     scanf("%s",model2);
-
+    int found = 0;
     for (int i = 0; i < total; i++) {
-        if (strcmp(model2,model[i])==0) {
+        if (strcmp(model2,avion[i].model)==0) {
+            found  = 1;
             int m;
             printf("Modifier (1. modele, 2. capacite, 3. statut) : \n");
               printf("Modifier all (4. modele,capacite,statut) : \n");
@@ -228,23 +229,23 @@ void Modifiemodel() {
             switch (m) {
                 case 1:
                     printf("New modele : ");
-                    scanf(" %[^\n]", model[i]);
+                    scanf(" %[^\n]", avion[i].model);
                     break;
                 case 2:
                     printf("Nez capacite : ");
-                    scanf("%d", &capacite[i]);
+                    scanf("%d", &avion[i].capacite);
                     break;
                 case 3:
                     printf("New statut : ");
-                    scanf(" %[^\n]", statut[i]);
+                    scanf(" %[^\n]", avion[i].statut);
                     break;
                     case 4:
                     printf("New modele : ");
-                    scanf(" %[^\n]", model[i]);
+                    scanf(" %[^\n]", avion[i].model);
                     printf("New statut : ");
-                    scanf(" %[^\n]", statut[i]);
+                    scanf(" %[^\n]", avion[i].statut);
                     printf("Nez capacite : ");
-                    scanf("%d", &capacite[i]);
+                    scanf("%d", &avion[i].capacite);
                     break;
                 default:
                     printf("Choix invalide.\n");
@@ -253,7 +254,9 @@ void Modifiemodel() {
             return;
         }
     }
-    printf("non ID.\n");
+    if(!found ){
+        printf("non model.\n");
+    }
 }
 void Modifie()
 {
@@ -282,38 +285,48 @@ void recherchid()
     int id2;
     printf("entre id : ");
     scanf("%d",&id2);
+    int found = 0;
     for(int i = 0;i < total;i++)
     {
-        if(id2 == id[i])
+        if(id2 == avion[i].id)
         {
-            printf("\nid : %d\n",id[i]);
-            printf("\nmodel : %s\n",model[i]);
-            printf("\nstatut : %s\n",statut[i]);
-            printf("\ncapacite : %d\n",capacite[i]);
-            printf("\ndate : %s\n",date[i]);
+            found = 1;
+            printf("\nid : %d\n",avion[i].id);
+            printf("\nmodel : %s\n",avion[i].model);
+            printf("\nstatut : %s\n",avion[i].statut);
+            printf("\ncapacite : %d\n",avion[i].capacite);
+            printf("\ndate : %s\n",avion[i].date);
 
         }
     }
-     printf("non id");
+    if(!found){
+         printf("non id");
+    }
 }
 void recherchmodel()
 {
     char model2[100];
     printf("entre model : ");
     scanf("%s",model2);
+    int found = 0;
     for(int i = 0;i < total;i++)
     {
-        if(strcmp(model2,model[i])==0)
+        if(strcmp(model2,avion[i].model)==0)
         {
-            printf("\nid : %d\n",id[i]);
-            printf("\nmodel : %s\n",model[i]);
-            printf("\nstatut : %s\n",statut[i]);
-            printf("\ncapacite : %d\n",capacite[i]);
-            printf("\ndate : %s\n",date[i]);
+            found = 1;
+            printf("\nid : %d\n",avion[i].id);
+            printf("\nmodel : %s\n",avion[i].model);
+            printf("\nstatut : %s\n",avion[i].statut);
+            printf("\ncapacite : %d\n",avion[i].capacite);
+            printf("\ndate : %s\n",avion[i].date);
 
         }
     }
-    printf("non model");
+    if (!found)
+    {
+        printf("non model");
+    }
+    
 }
 void recherch()
 {
