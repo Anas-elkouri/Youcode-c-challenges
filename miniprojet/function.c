@@ -29,22 +29,31 @@ void Affichmenu() {
 
         switch (ch) {
             case 1: 
+            system("cls");
             Ajoute(); 
             break;
             case 2: 
+            system("cls");
             Modifie(); 
             break;
             case 3: 
+            system("cls");
             suppimer(); 
             break;
             case 4: 
+            system("cls");
             Afficher(); 
             break;
             case 5: 
+            system("cls");
              recherch();
              break;
-            case 7: printf("Bye!\n"); break;
-            default: printf("Erreur: choix invalide\n"); break;
+            case 7: 
+            printf("Bye!\n");
+             break;
+            default: 
+            printf("Erreur: choix invalide\n"); 
+            break;
         }
     } while (ch != 7);
 }
@@ -82,7 +91,8 @@ void Modifieid() {
     for (int i = 0; i < total; i++) {
         if (id2 == id[i]) {
             int m;
-            printf("Modifier (1. modele, 2. capacite, 3. statut) : ");
+            printf("Modifier (1. modele, 2. capacite, 3. statut) : \n");
+            printf("Modifier all (4. modele,capacite,statut) : \n");
             scanf("%d", &m);
 
             switch (m) {
@@ -98,8 +108,17 @@ void Modifieid() {
                     printf("New statut : ");
                     scanf(" %[^\n]", statut[i]);
                     break;
+                case 4:
+                    printf("New modele : ");
+                    scanf(" %[^\n]", model[i]);
+                    printf("New statut : ");
+                    scanf(" %[^\n]", statut[i]);
+                    printf("Nez capacite : ");
+                    scanf("%d", &capacite[i]);
+                    break;
                 default:
                     printf("Choix invalide.\n");
+                    break;
             }
             printf("Modification done.\n");
             return;
@@ -119,6 +138,7 @@ void Afficher() {
             printf("Statut  : %s\n", statut[i]);
             printf("Capacite: %d\n", capacite[i]);
             printf("Date    : %s\n", date[i]);
+              printf("\n===== DONE =====\n");
         }
     }
 }
@@ -176,8 +196,8 @@ void Supprimermodel() {
 
 void suppimer() {
     int m;
-    printf("\n1. Supprimer par ID");
-    printf("\n2. Supprimer par modele");
+    printf("\n1. Supprimer par ID\n");
+    printf("\n2. Supprimer par modele\n");
     printf("\nChoix : ");
     scanf("%d", &m);
 
@@ -189,7 +209,7 @@ void suppimer() {
         Supprimermodel(); 
         break;
         default: 
-        printf("Choix invalide.\n"); 
+        printf("error\n"); 
         break;
     }
 }
@@ -201,7 +221,8 @@ void Modifiemodel() {
     for (int i = 0; i < total; i++) {
         if (strcmp(model2,model[i])==0) {
             int m;
-            printf("Modifier (1. modele, 2. capacite, 3. statut) : ");
+            printf("Modifier (1. modele, 2. capacite, 3. statut) : \n");
+              printf("Modifier all (4. modele,capacite,statut) : \n");
             scanf("%d", &m);
 
             switch (m) {
@@ -217,6 +238,14 @@ void Modifiemodel() {
                     printf("New statut : ");
                     scanf(" %[^\n]", statut[i]);
                     break;
+                    case 4:
+                    printf("New modele : ");
+                    scanf(" %[^\n]", model[i]);
+                    printf("New statut : ");
+                    scanf(" %[^\n]", statut[i]);
+                    printf("Nez capacite : ");
+                    scanf("%d", &capacite[i]);
+                    break;
                 default:
                     printf("Choix invalide.\n");
             }
@@ -229,8 +258,8 @@ void Modifiemodel() {
 void Modifie()
 {
     int ch;
-    printf("1 modifie par id");
-    printf("2 modifie par model");
+    printf("1 modifie par id\n");
+    printf("2 modifie par model\n");
     printf("entre choix : ");
     scanf("%d",&ch);
     switch (ch)
@@ -265,11 +294,12 @@ void recherchid()
 
         }
     }
+     printf("non id");
 }
 void recherchmodel()
 {
     char model2[100];
-    printf("entre id : ");
+    printf("entre model : ");
     scanf("%s",model2);
     for(int i = 0;i < total;i++)
     {
@@ -283,12 +313,13 @@ void recherchmodel()
 
         }
     }
+    printf("non model");
 }
 void recherch()
 {
     int ch;
-    printf("1  recherch par id");
-    printf("2 recherch par model");
+    printf("1  recherch par id\n");
+    printf("2 recherch par model\n");
     printf("entre choix : ");
     scanf("%d",&ch);
     switch (ch)
