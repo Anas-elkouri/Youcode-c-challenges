@@ -14,10 +14,11 @@ void suppimer();
 void Modifiemodel();
 void Modifie();
 void recherchid();
-void recherchmodel();
 void recherch();
-
-
+void trieModel();
+void triCapacite();
+void FonctionTrie();
+void recherchmodel();
 
 extern char model[MAX][100];
 extern char statut[MAX][100];
